@@ -1,0 +1,2 @@
+{%- from "home_assistant/map.jinja" import server with context %}
+{{ server.known_device|yaml(False) }}

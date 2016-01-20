@@ -1,0 +1,11 @@
+{%- from "home_assistant/map.jinja" import server with context %}
+{%- from "linux/map.jinja" import system with context %}
+homeassistant:
+  name: {{ server.name }}
+  latitude: {{ server.latitude }}
+  longitude: {{ server.longitude }}
+  temperature_unit: {{ server.temperature_unit }}
+  time_zone: {{ system.timezone }}
+http:
+  api_password: {{ server.api_password }}
+{{ server.plugin|yaml(False) }}

@@ -2,7 +2,7 @@
 # Fill in documentation details
 doc:
   name: home_assistant
-  description: Some service info
+  description: Home Assistant is an open-source home automation platform.
   role:
     server:
       name: server

@@ -1,23 +1,25 @@
 
 ==================================
-home_assistant
+Home Assistant
 ==================================
 
-Service home_assistant description
-
+Home Assistant is an open-source home automation platform running on Python 3. Track and control all devices at home and automate control.
+	
 Sample pillars
 ==============
 
-Single home_assistant service
+Single homeassistant service
 
 .. code-block:: yaml
 
     home_assistant:
       server:
         enabled: true
-        version: icehouse
+        bind:
+          address: 0.0.0.0
+          port: 8123
 
 Read more
 =========
 
-* links
+* https://home-assistant.io/getting-started/
