@@ -1,0 +1,10 @@
+applications:
+- home_assistant
+classes:
+- service.home_assistant.support
+parameters:
+  home_assistant:
+    server:
+      enabled: true
+      bind:
+        address: 0.0.0.0

@@ -1,0 +1,29 @@
+
+{%- set source_engine = salt['pillar.get']('home_assistant:server:source:engine') %}
+
+{%- load_yaml as base_defaults %}
+{%- if source_engine == 'git' %}
+Debian:
+  pkgs:
+  - python-psycopg2
+  dir:
+    base: /srv/home_assistant/venv
+    home: /var/lib/home_assistant
+    workspace: /srv/home_assistant/workspace
+RedHat:
+  pkgs:
+  - python-psycopg2
+  dir:
+    base: /srv/home_assistant/venv
+    home: /var/lib/home_assistant
+    workspace: /srv/home_assistant/workspace
+{%- else %}
+Debian:
+  pkgs:
+  - helpdesk
+  dir:
+    base: /usr/lib/home_assistant
+{%- endif %}
+{%- endload %}
+
+{%- set server = salt['grains.filter_by'](base_defaults, merge=salt['pillar.get']('home_assistant:server')) %}

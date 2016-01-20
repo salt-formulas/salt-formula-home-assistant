@@ -1,0 +1,15 @@
+Source: salt-formula-home_assistant
+Maintainer: ales.komarek@newt.cz
+Section: admin
+Priority: optional
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.6
+Homepage: http://www.tcpcloud.eu
+Vcs-Browser: https://github.com/tcpcloud/salt-formula-home_assistant
+Vcs-Git: https://github.com/tcpcloud/salt-formula-home_assistant.git
+
+Package: salt-formula-home_assistant
+Architecture: all
+Depends: ${misc:Depends}, salt-master, reclass
+Description: home_assistant salt formula
+ Install and configure home_assistant system.
