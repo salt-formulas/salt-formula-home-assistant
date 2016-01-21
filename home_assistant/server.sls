@@ -7,7 +7,9 @@ home_assistant_packages:
 
 {{ server.dir.base }}:
   virtualenv.manage:
+  - system_site_packages: True
   - requirements: salt://home_assistant/files/requirements.txt
+  - python: /usr/bin/python3
   - require:
     - pkg: home_assistant_packages
 
