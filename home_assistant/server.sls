@@ -10,7 +10,6 @@ home_assistant_packages:
   - requirements: salt://home_assistant/files/requirements.txt
   - require:
     - pkg: home_assistant_packages
-    - user: home_assistant
 
 home_assistant_user:
   user.present:
