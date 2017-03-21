@@ -32,6 +32,29 @@ home_assistant_dir:
   - require:
     - virtualenv: {{ server.dir.base }}
 
+{%- if server.config.engine == 'git' %}
+
+home_assistant_config:
+  git.latest:
+  - name: {{ server.config.address }}
+  - target: /etc/home_assistant
+  - rev: {{ server.config.revision|default(server.config.branch) }}
+  {%- if grains.saltversion >= "2015.8.0" %}
+  - branch: {{ server.config.branch|default(server.config.revision) }}
+  {%- endif %}
+  - force_reset: {{ server.config.force_reset|default(False) }}
+
+{%- else %}
+
+home_assistant_config_dir:
+  file.directory:
+  - name: /etc/home_assistant
+  - mode: 700
+  - makedirs: true
+  - user: home_assistant
+  - require:
+    - virtualenv: {{ server.dir.base }}
+
 home_assistant_config:
   file.managed:
   - name: /etc/home_assistant/configuration.yaml
@@ -40,7 +63,7 @@ home_assistant_config:
   - user: home_assistant
   - mode: 600
   - require:
-    - file: home_assistant_dir
+    - file: home_assistant_config_dir
 
 {%- if server.known_device is defined %}
 
@@ -53,6 +76,8 @@ home_assistant_know_devices:
   - mode: 600
   - require:
     - file: home_assistant_dir
+
+{%- endif %}
 
 {%- endif %}
 

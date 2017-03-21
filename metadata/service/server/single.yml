@@ -9,26 +9,3 @@ parameters:
       bind:
         address: 0.0.0.0
         port: 8123
-      # Name of the location where Home Assistant is running
-      name: Home
-      # Location required to calculate the time the sun rises and sets
-      latitude: 50.0
-      longitude: 14.4
-      # C for Celcius, F for Fahrenheit
-      temperature_unit: C
-      time_zone: Europe/Prague
-      plugin:
-        # View all events in a logbook
-        logbook:
-        # Discover some devices automatically
-        discovery:
-        # Enables support for tracking state changes over time.
-        history:
-        # Checks for available updates
-        updater:
-        # Enables the frontend
-        frontend:
-        # Allows you to issue voice commands from the frontend
-        conversation:
-        # Track the sun
-        sun:

@@ -1,9 +1,10 @@
 
-==================================
-Home Assistant
-==================================
+======================
+Home Assistant formula
+======================
 
-Home Assistant is an open-source home automation platform running on Python 3. Track and control all devices at home and automate control.
+Home Assistant is an open-source home automation platform running on Python 3.
+Track and control all devices at home and automate control.
 	
 Sample pillars
 ==============
@@ -19,10 +20,27 @@ Single homeassistant service
           address: 0.0.0.0
           port: 8123
 
-Read more
-=========
+home-assistant service wit git based configuration
+
+.. code-block:: yaml
+
+    home_assistant:
+      server:
+        enabled: true
+        bind:
+          address: 0.0.0.0
+          port: 8123
+        config:
+          engine: git
+          address: '${_param:home_assistant_config_repository}'
+          branch: ${_param:home_assistant_config_revision}
+
+
+More information
+================
 
 * https://home-assistant.io/getting-started/
+
 
 Documentation and Bugs
 ======================

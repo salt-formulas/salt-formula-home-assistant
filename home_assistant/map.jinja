@@ -5,8 +5,14 @@ Debian:
   pkgs:
   - python3-dev
   - python3-pip
+  bind:
+    address: 0.0.0.0
+    port: 8123
   dir:
     base: /srv/home_assistant
+  config:
+    engine: local
+  user: home_assistant
 {%- endload %}
 
 {%- set server = salt['grains.filter_by'](base_defaults, merge=salt['pillar.get']('home_assistant:server')) %}
