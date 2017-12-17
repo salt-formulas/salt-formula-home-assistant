@@ -13,6 +13,20 @@ home_assistant_packages:
   - require:
     - pkg: home_assistant_packages
 
+home_assistant_install:
+  pip.installed:
+  {%- if server.source is defined and server.source.get("engine", "git") %}
+  - editable: git+{{ server.source.address }}@{{ server.source.version }}#egg=homeassistant
+  {%- else %}
+  - name: homeassistant{%- if server.source.version is defined %}=={{ server.source.version }}{%- endif %}
+  {%- endif %}
+  - pre_releases: True
+  - bin_env: {{ server.dir.base }}
+  - exists_action: w
+  - require:
+    - virtualenv: {{ server.dir.base }}
+    - pkg: home_assistant_packages
+
 home_assistant_user:
   user.present:
   - name: home_assistant
