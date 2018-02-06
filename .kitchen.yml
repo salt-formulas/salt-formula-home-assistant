@@ -1,0 +1,46 @@
+---
+driver:
+  name: docker
+  hostname: home_assistant.ci.local
+  #socket: tcp://127.0.0.1:2376
+  use_sudo: false
+
+
+provisioner:
+  name: salt_solo
+  salt_install: bootstrap
+  salt_bootstrap_url: https://bootstrap.saltstack.com
+  salt_version: latest
+  require_chef: false
+  formula: home_assistant
+  log_level: info
+  state_top:
+    base:
+      "*":
+        - home_assistant
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - home_assistant
+  grains:
+    noservices: True
+
+
+platforms:
+  - name: <%=ENV['PLATFORM'] || 'ubuntu-xenial'%>
+    driver_config:
+      image: <%=ENV['PLATFORM'] || 'trevorj/salty-whales:xenial'%>
+      platform: ubuntu
+
+verifier:
+  name: inspec
+  sudo: true
+
+suites:
+  - name: single
+    provisioner:
+      pillars-from-files:
+        home_assistant.sls: tests/pillar/single.sls
+
+# vim: ft=yaml sw=2 ts=2 sts=2 tw=125

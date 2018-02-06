@@ -3,3 +3,8 @@ tests/build/
 *.swp
 *.pyc
 .ropeproject
+.kitchen
+.bundle
+.vendor
+.kitchen/
+.kitchen.local.yml
