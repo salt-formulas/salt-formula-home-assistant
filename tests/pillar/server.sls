@@ -1,3 +1,3 @@
 home_assistant:
-  client:
+  server:
     enabled: true
