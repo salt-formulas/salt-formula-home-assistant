@@ -173,7 +173,7 @@ lint_releasenotes() {
 
 lint() {
 #    lint_releasenotes
-#    log_err "TODO: lint_releasenotes"
+    log_err "TODO: lint_releasenotes"
 }
 
 run() {
