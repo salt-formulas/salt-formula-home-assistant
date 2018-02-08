@@ -10,6 +10,6 @@ Vcs-Git: https://github.com/tcpcloud/salt-formula-home_assistant.git
 
 Package: salt-formula-home_assistant
 Architecture: all
-Depends: ${misc:Depends}, salt-master, reclass
+Depends: ${misc:Depends}
 Description: home_assistant salt formula
  Install and configure home_assistant system.
