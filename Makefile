@@ -34,7 +34,6 @@ all:
 	@echo "make release-major  - Generate new major release"
 	@echo "make release-minor  - Generate new minor release"
 	@echo "make changelog      - Show changes since last release"
-	@echo "make test-model-validate      - Run salt jsonschema validation"
 
 install:
 	# Formula
@@ -52,10 +51,6 @@ lint:
 
 test:
 	[ ! -d tests ] || (cd tests; ./run_tests.sh)
-
-test-model-validate:
-	# TODO make it actually fail
-	[ ! -d $(FORMULANAME)/schemas/ ] || (cd tests; ./run_tests.sh model-validate)
 
 release-major: check-changes
 	@echo "Current version is $(VERSION), new version is $(NEW_MAJOR_VERSION)"
