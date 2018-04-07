@@ -79,6 +79,28 @@ home_assistant_config:
   - require:
     - file: home_assistant_config_dir
 
+home_assistant_service_script:
+  file.managed:
+  - name: /etc/systemd/system/home-assistant.service
+  - source: salt://home_assistant/files/home-assistant.service
+  - template: jinja
+  - user: root
+  - mode: 644
+  - watch_in:
+    - module: home_assistant_restart_systemd
+
+home_assistant_service:
+  service.running:
+  - name: home-assistant
+  - enable: true
+  - watch:
+    - module: home_assistant_restart_systemd
+    - file: home_assistant_service_script
+
+home_assistant_restart_systemd:
+  module.wait:
+  - name: service.systemctl_reload
+
 {%- if server.known_device is defined %}
 
 home_assistant_know_devices:

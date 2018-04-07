@@ -1,0 +1,11 @@
+[Unit]
+Description=Home Assistant
+After=network-online.target
+
+[Service]
+Type=simple
+User=home_assistant
+ExecStart=/srv/home_assistant/bin/hass --config /etc/home_assistant
+
+[Install]
+WantedBy=multi-user.target
