@@ -79,6 +79,22 @@ home_assistant_config:
   - require:
     - file: home_assistant_config_dir
 
+{%- if server.known_device is defined %}
+
+home_assistant_know_devices:
+  file.managed:
+  - name: /etc/home_assistant/known_devices.yaml
+  - source: salt://home_assistant/files/known_devices.yaml
+  - template: jinja
+  - user: home_assistant
+  - mode: 600
+  - require:
+    - file: home_assistant_dir
+
+{%- endif %}
+
+{%- endif %}
+
 home_assistant_service_script:
   file.managed:
   - name: /etc/systemd/system/home-assistant.service
@@ -100,21 +116,5 @@ home_assistant_service:
 home_assistant_restart_systemd:
   module.wait:
   - name: service.systemctl_reload
-
-{%- if server.known_device is defined %}
-
-home_assistant_know_devices:
-  file.managed:
-  - name: /etc/home_assistant/known_devices.yaml
-  - source: salt://home_assistant/files/known_devices.yaml
-  - template: jinja
-  - user: home_assistant
-  - mode: 600
-  - require:
-    - file: home_assistant_dir
-
-{%- endif %}
-
-{%- endif %}
 
 {%- endif %}
