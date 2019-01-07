@@ -35,6 +35,7 @@ home-assistant service wit git based configuration
           engine: git
           address: '${_param:home_assistant_config_repository}'
           branch: ${_param:home_assistant_config_revision}
+          identity: /path/to/optional/ssh/identity/file
 
 
 References
