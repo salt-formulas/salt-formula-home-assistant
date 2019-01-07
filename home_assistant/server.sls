@@ -5,13 +5,21 @@ home_assistant_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
+home_assistant_user:
+  user.present:
+  - name: home_assistant
+  - system: true
+  - home: {{ server.dir.base }}
+
 {{ server.dir.base }}:
   virtualenv.manage:
+  - user: home_assistant
   - system_site_packages: True
   - requirements: salt://home_assistant/files/requirements.txt
   - python: /usr/bin/python3
   - require:
     - pkg: home_assistant_packages
+    - user: home_assistant_user
 
 home_assistant_install:
   pip.installed:
@@ -20,20 +28,13 @@ home_assistant_install:
   {%- else %}
   - name: homeassistant{%- if server.get('source', {}).version is defined %}=={{ server.source.version }}{%- endif %}
   {%- endif %}
+  - user: home_assistant
   - pre_releases: True
   - bin_env: {{ server.dir.base }}
   - exists_action: w
   - require:
     - virtualenv: {{ server.dir.base }}
     - pkg: home_assistant_packages
-
-home_assistant_user:
-  user.present:
-  - name: home_assistant
-  - system: true
-  - home: {{ server.dir.base }}
-  - require:
-    - virtualenv: {{ server.dir.base }}
 
 home_assistant_dir:
   file.directory:
@@ -51,23 +52,18 @@ home_assistant_dir:
 home_assistant_config:
   git.latest:
   - name: {{ server.config.address }}
+  - user: home_assistant
   - target: /etc/home_assistant
   - rev: {{ server.config.revision|default(server.config.branch) }}
   {%- if grains.saltversion >= "2015.8.0" %}
   - branch: {{ server.config.branch|default(server.config.revision) }}
   {%- endif %}
+  {%- if server.config.identity is defined %}
+  - identity: {{ server.config.identity }}
+  {%- endif %}
   - force_reset: {{ server.config.force_reset|default(False) }}
 
 {%- else %}
-
-home_assistant_config_dir:
-  file.directory:
-  - name: /etc/home_assistant
-  - mode: 700
-  - makedirs: true
-  - user: home_assistant
-  - require:
-    - virtualenv: {{ server.dir.base }}
 
 home_assistant_config:
   file.managed:
@@ -77,7 +73,7 @@ home_assistant_config:
   - user: home_assistant
   - mode: 600
   - require:
-    - file: home_assistant_config_dir
+    - file: home_assistant_dir
 
 {%- if server.known_device is defined %}
 
